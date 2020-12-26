@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather App</title>
+    <script src='https://kit.fontawesome.com/a076d05399.js'></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        html{
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            background: rgb(131,58,180);
+background: linear-gradient(90deg, rgba(131,58,180,1) 0%, rgba(253,29,29,1) 50%, rgba(252,176,69,1) 100%);
+        }
+        .box{
+          text-align: center;
+          margin: 0px auto;
+          margin-top: 130px;
+          background: skyblue;
+          padding: 3rem;
+          max-width: 300px;
+          border-radius: 30px;
+        }
+        #wcon{
+            padding-bottom: 2rem;
+        }
+        .h1{
+            text-transform: uppercase;
+            color: white;
+            font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+            text-align: center;
+            font-size: 4rem;
+        }
+    </style>
+    
+</head>
+<body>
+    <h1 class="h1">Weather App</h1>
+    <div class="box">
+        
+        <div id="wcon">
+           
+        </div>
+        <div class="info">
+            <h1 class="location"><i class="fa fa-street-view" ></i>{%location%}, {%country%}
+                </h1>
+            <p id="date">Wed|OCT 23|9:30PM</p>
+            <h1 class="temp">{%tempval%} &deg;C</h1>
+            <h6 class="tempmin_max">Min {%tempmin%}&deg;C | Max {%tempmax%}&deg;C</h6>
+        </div>
+    </div>
+    <script>
+        const date=document.getElementById('date');
+        let wcon=document.getElementById('wcon');
+
+        const tempstatus ='{%tempstatus%}';
+        if(tempstatus=='Sunny'){
+            wcon.innerHTML="<i class='fas fa-sun' style='font-size:38px; color:orange;'></i>";
+        }else if(tempstatus=='Clouds'){
+            wcon.innerHTML="<i class='fas fa-cloud' style='font-size:36px'></i>";
+        }else if(tempstatus=='Rainy'){
+            wcon.innerHTML="<i class='fas fa-cloud-rain' style='font-size:36px'></i>";
+        }else{
+            wcon.innerHTML="<i class='fas fa-cloud-sun' style='font-size:36px'></i>";
+        }
+
+        const getCurDay=()=>{
+            var weekday= new Array(7);
+            weekday[0]='Sun';
+            weekday[1]='Mon';
+            weekday[2]='Tue';
+            weekday[3]='Wed';
+            weekday[4]='Thu';
+            weekday[5]='Fri';
+            weekday[6]='Sat';
+
+            let curTime= new Date();
+            let day=weekday[curTime.getDay()];
+            return day;
+        };
+
+        const getCurTime=()=>{
+            var months = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+
+            var Now=new Date();
+            var month=months[Now.getMonth()];
+            var dat=Now.getDate();
+            let hours=Now.getHours();
+            let mins=Now.getMinutes();
+            let per='AM';
+            console.log(month);
+            if(hours>11){
+                per='PM';
+            }
+            if(hours>12){
+                hours-=12;
+            }
+            if(mins<10){
+                min='0'+mins;
+            }
+
+            return `${month} ${dat} | ${hours}:${mins}${per}`;
+        };
+        getCurTime();
+        date.innerHTML=getCurDay()+'|'+getCurTime()
+    </script>
+</body>
+</html>
